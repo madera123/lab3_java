@@ -13,18 +13,31 @@ public class Main {
 
     private void starter(int storageSize, int itemNumbers) {
         Manager manager = new Manager(storageSize);
-        int item =0;
+        int itemProd =0;
+        int itemCons =0;
+
         int i=0;
-        while (item<itemNumbers){
+        while (itemProd<itemNumbers){
             int col=(int)Math.round(Math.random()*storageSize);
-            if (itemNumbers-item>col){
+            if (itemNumbers-itemProd>col){
                 new  Producer(col,manager,i);
-                new  Consumer(col,manager,i);
-                item+=col;
+                itemProd+=col;
             }
             else {
-                new  Producer(itemNumbers-item,manager,i);
-                new  Consumer(itemNumbers-item,manager,i);
+                new  Producer(itemNumbers-itemProd,manager,i);
+                break;
+            }
+            i+=1;
+            if(i==20){break;}
+        }
+        while (itemCons<itemNumbers){
+            int col=(int)Math.round(Math.random()*storageSize);
+            if (itemNumbers-itemCons>col){
+                new  Consumer(col,manager,i);
+                itemCons+=col;
+            }
+            else {
+                new  Consumer(itemCons-itemProd,manager,i);
                 break;
             }
             i+=1;
